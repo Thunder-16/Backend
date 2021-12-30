@@ -30,7 +30,7 @@ public class MemberController {
     }
     @PostMapping("/login")
     public SingleResult<Map<String,String>> login(@RequestBody SignInDto signInDto){
-        return responseService.getSingleResult(memberService.login(signInDto.getEmail(),signInDto.getPassword()));
+        return responseService.getSingleResult(memberService.login(signInDto.getEmail(), signInDto.getPassword()));
     }
     @PostMapping("/logout")
     public CommonResult logout(){

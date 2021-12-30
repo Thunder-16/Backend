@@ -20,6 +20,6 @@ public class MemberDto {
     @NotBlank(message = "name should be valid")
     private String name;
     public Member toEntity(){
-        return new Member(name,email,password);
+        return new Member(name, email, password);
     }
 }

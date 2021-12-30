@@ -14,6 +14,6 @@ public class GuestBookDto {
     @NotBlank(message = "Date should be valid")
     private int date;
     public GuestBook toEntity(){
-        return new GuestBook(content,date);
+        return new GuestBook(content, date);
     }
 }

@@ -16,7 +16,7 @@ public class Diary {
     private String content;
     private int date;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_id",nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member writer;
 
     public Diary() {}
