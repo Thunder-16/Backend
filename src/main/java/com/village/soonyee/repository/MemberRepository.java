@@ -26,18 +26,18 @@ public class MemberRepository {
     }
     public void updateProfile(String fileName,Member member){
         em.createQuery("update Member m set m.profile=:fileName where m=:member")
-                .setParameter("fileName",fileName)
-                .setParameter("member",member)
+                .setParameter("fileName", fileName)
+                .setParameter("member", member)
                 .executeUpdate();
     }
     @Transactional(readOnly = true)
     public List<Member> findByEmail(String email){
-        return em.createQuery("select m from Member m where m.email=:email",Member.class)
-                .setParameter("email",email)
+        return em.createQuery("select m from Member m where m.email=:email", Member.class)
+                .setParameter("email", email)
                 .getResultList();
     }
     @Transactional(readOnly = true)
     public Member findById(Long memberIdx){
-        return em.find(Member.class,memberIdx);
+        return em.find(Member.class, memberIdx);
     }
 }

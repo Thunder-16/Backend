@@ -29,7 +29,7 @@ public class MemberController {
         return responseService.getSingleResult(memberService.findById(memberIdx));
     }
     @PostMapping("/login")
-    public SingleResult<Map<String,String>> login(@RequestBody SignInDto signInDto){
+    public SingleResult<Map<String, String>> login(@RequestBody SignInDto signInDto){
         return responseService.getSingleResult(memberService.login(signInDto.getEmail(), signInDto.getPassword()));
     }
     @PostMapping("/logout")

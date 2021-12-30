@@ -41,17 +41,17 @@ public class MemberService {
     public Member findById(Long memberIdx){
         Member byId = memberRepository.findById(memberIdx);
         if(byId==null){
-            throw new MemberNotExistsException("Member doesn't exist",ErrorCode.MEMBER_NOT_EXISTS);
+            throw new MemberNotExistsException("Member doesn't exist", ErrorCode.MEMBER_NOT_EXISTS);
         }
         return byId;
     }
-    public Map<String,String> login(String id,String password){
+    public Map<String, String> login(String id, String password){
         List<Member> byEmail = memberRepository.findByEmail(id);
         if(byEmail.size()==0){throw new UserNotFoundException("Can't find user", ErrorCode.USER_NOT_FOUND);}//해당 id를 가진 유저가 존재하는지 확인
 
         Member member = byEmail.get(0);
         boolean check = passwordEncoder.matches(password, member.getPassword());
-        if(!check){throw new UserNotFoundException("Can't find user",ErrorCode.USER_NOT_FOUND);}
+        if(!check){throw new UserNotFoundException("Can't find user", ErrorCode.USER_NOT_FOUND);}
 
         member.updateCoin(10);
 
@@ -60,12 +60,12 @@ public class MemberService {
         final String refreshToken=tokenProvider.generateRefreshToken(member.getEmail());
 
         //토큰 유효기간 설정
-        redisUtil.setDataExpire(refreshToken,member.getEmail(), TokenProvider.REFRESH_TOKEN_EXPIRE_TIME);
+        redisUtil.setDataExpire(refreshToken, member.getEmail(), TokenProvider.REFRESH_TOKEN_EXPIRE_TIME);
 
-        Map<String,String> map=new HashMap<>();
-        map.put("id",member.getEmail());
-        map.put("accessToken",accessToken);
-        map.put("refreshToken",refreshToken);
+        Map<String, String> map=new HashMap<>();
+        map.put("id", member.getEmail());
+        map.put("accessToken", accessToken);
+        map.put("refreshToken", refreshToken);
         return map;
     }
     public void logOut(){
@@ -80,12 +80,12 @@ public class MemberService {
     }
     public void updateStatusMessage(StatusMessageDto statusMessageDto){
         Member member = memberRepository.findByEmail(getUserEmail()).get(0);
-        memberRepository.updateMessage(member,statusMessageDto.getMessage());
+        memberRepository.updateMessage(member, statusMessageDto.getMessage());
     }
     public void uploadProfile(String fileName){
         List<Member> byEmail = memberRepository.findByEmail(getUserEmail());
         if(byEmail.isEmpty()){
-            throw new MemberNotExistsException("Member doesn't exists",ErrorCode.MEMBER_NOT_EXISTS);
+            throw new MemberNotExistsException("Member doesn't exists", ErrorCode.MEMBER_NOT_EXISTS);
         }
         memberRepository.updateProfile(fileName, byEmail.get(0));
     }
@@ -103,7 +103,7 @@ public class MemberService {
     public void buyThing(int cost){
         List<Member> byEmail = memberRepository.findByEmail(getUserEmail());
         if(byEmail.isEmpty()){
-            throw new UserNotFoundException("please try after login",ErrorCode.USER_NOT_FOUND);
+            throw new UserNotFoundException("please try after login", ErrorCode.USER_NOT_FOUND);
         }
         Member member = byEmail.get(0);
         member.updateCoin(-cost);

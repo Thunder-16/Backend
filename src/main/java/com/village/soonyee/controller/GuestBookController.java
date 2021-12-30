@@ -18,7 +18,7 @@ public class GuestBookController {
     private final GuestBookService guestBookService;
     @PostMapping("/guestBook/{memberIdx}")
     public CommonResult join(@RequestBody GuestBookDto guestBookDto, @PathVariable Long memberIdx){
-        guestBookService.join(memberIdx,guestBookDto);
+        guestBookService.join(memberIdx, guestBookDto);
         return responseService.getSuccessResult();
     }
     @GetMapping("/guestBook/{memberIdx}")
